@@ -43,12 +43,13 @@ This information is from [caniuse.com](https://caniuse.com/web-bluetooth)
 Assuming everything is installed correctly this should work immedietly when you upload to your Arduino
  - Alternatively you can access it from the Github [here](RCControl/examples/ExampleMotorControl/ExampleMotorControl.ino)
 7. On line 7 in the example you will see the following code:  
-`RCControl RCC("12345678-1234-1234-1234-123456789abc", "abcdef01-1234-1234-1234-123456789abc", "Example");`  
+`RCControl RCC("12345678-1234-1234-1234-123456789abc", "abcdef01-1234-1234-1234-123456789abc", "Example", 64);`  
 You will need to change a few of the arguments:  
  - `12345678-1234-1234-1234-123456789abc` represents the Service UUID, using this [UUID generator](https://www.uuidgenerator.net) generate and replace the template UUID (Keep hold of this UUID, you will need it on the website when you come to connecting to the Arduino)
  - `abcdef01-1234-1234-1234-123456789abc` represents the Characteristic UUID, using this [UUID generator](https://www.uuidgenerator.net) generate and replace the template UUID (Keep hold of this UUID, you will need it on the website when you come to connecting to the Arduino)  
  **NOTE: The Service UUID and Characteristic UUID MUST be different**
  - `Example` represents the name of the Arduino when broadcasting, change this to something like your team name or something similar to seperate it from other teams robots
+ - `64` repesents the maximum byte length of received data, if you start sending large strings of data they will get cut off after 64 characters, you can increase this value up to 512 if you need to
 
 # Disclaimer when using the IMU
 
