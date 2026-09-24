@@ -53,4 +53,12 @@ private:
 	const char* CHAR_UUID;
 };
 
+
+class RCControl_WiFi : public RCControl
+{
+public:
+	RCControl_WiFi();
+	void Begin() override;
+};
+
 #endif

@@ -50,43 +50,6 @@ private:
 RCControl::RCControl() { }
 void RCControl::Begin() { }
 
-
-
-
-
-/// <summary>
-/// Chessburger :3
-/// </summary>
-/// <param name="Service_UUID">Service UUID</param>
-/// <param name="Chara_UUID">Characteristic UUID</param>
-/// <param name="name">The name that will be broadcast</param>
-/// 
-RCControl_BLE::RCControl_BLE(const char* Service_UUID, const char* Chara_UUID, String name)
-{
-    SERVICE_UUID = Service_UUID;
-    CHAR_UUID = Chara_UUID;
-    _name = name;
-}
-
-void RCControl_BLE::Begin() {
-    BLEDevice _dev = BLEDevice();
-    _dev.init((String("RC-Car ") + _name).c_str());
-
-    BLEServer* _server = _dev.createServer();
-    BLEService* _serv = _server->createService(SERVICE_UUID);
-    BLECharacteristic* _char = _serv->createCharacteristic(CHAR_UUID, BLECharacteristic::PROPERTY_WRITE);
-
-    _char->setCallbacks(new CharCallbacks(this));
-    _server->setCallbacks(new ServerCallbacks(this));
-
-    _serv->start();
-
-    _dev.getAdvertising()->addServiceUUID(SERVICE_UUID);
-
-    _dev.startAdvertising();
-
-}
-
 bool RCControl::JoystickUpdate() {
     if (JoystickUpdated) {
         JoystickUpdated = false;
@@ -225,6 +188,50 @@ bool RCControl::Full() {
 
 bool RCControl::Empty() {
     return _NumOfItems == 0;
+}
+
+
+/// <summary>
+/// Chessburger :3
+/// </summary>
+/// <param name="Service_UUID">Service UUID</param>
+/// <param name="Chara_UUID">Characteristic UUID</param>
+/// <param name="name">The name that will be broadcast</param>
+/// 
+RCControl_BLE::RCControl_BLE(const char* Service_UUID, const char* Chara_UUID, String name)
+{
+    SERVICE_UUID = Service_UUID;
+    CHAR_UUID = Chara_UUID;
+    _name = name;
+}
+
+void RCControl_BLE::Begin() {
+    BLEDevice _dev = BLEDevice();
+    _dev.init((String("RC-Car ") + _name).c_str());
+
+    BLEServer* _server = _dev.createServer();
+    BLEService* _serv = _server->createService(SERVICE_UUID);
+    BLECharacteristic* _char = _serv->createCharacteristic(CHAR_UUID, BLECharacteristic::PROPERTY_WRITE);
+
+    _char->setCallbacks(new CharCallbacks(this));
+    _server->setCallbacks(new ServerCallbacks(this));
+
+    _serv->start();
+
+    _dev.getAdvertising()->addServiceUUID(SERVICE_UUID);
+
+    _dev.startAdvertising();
+
+}
+
+
+
+RCControl_WiFi::RCControl_WiFi() {
+
+}
+
+void RCControl_WiFi::Begin() {
+
 }
 
 #endif
