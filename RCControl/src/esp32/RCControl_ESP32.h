@@ -2,6 +2,9 @@
 #define RCControl_ESP32_h
 
 #include "Arduino.h"
+#include "WebServer.h"
+#include "WiFi.h"
+
 #include <BLEDevice.h>
 #include <BLEServer.h>
 #include <BLEUtils.h>
