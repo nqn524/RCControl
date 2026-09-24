@@ -44,8 +44,23 @@ private:
     }
 };
 
+/// <summary>
+/// Base
+/// </summary>
+RCControl::RCControl() { }
+void RCControl::Begin() { }
 
 
+
+
+
+/// <summary>
+/// Chessburger :3
+/// </summary>
+/// <param name="Service_UUID">Service UUID</param>
+/// <param name="Chara_UUID">Characteristic UUID</param>
+/// <param name="name">The name that will be broadcast</param>
+/// 
 RCControl_BLE::RCControl_BLE(const char* Service_UUID, const char* Chara_UUID, String name)
 {
     SERVICE_UUID = Service_UUID;
@@ -72,7 +87,7 @@ void RCControl_BLE::Begin() {
 
 }
 
-bool RCControl_BLE::JoystickUpdate() {
+bool RCControl::JoystickUpdate() {
     if (JoystickUpdated) {
         JoystickUpdated = false;
         return true;
@@ -82,7 +97,7 @@ bool RCControl_BLE::JoystickUpdate() {
     }
 }
 
-bool RCControl_BLE::GyroUpdate() {
+bool RCControl::GyroUpdate() {
     if (GryoUpdated) {
         GryoUpdated = false;
         return true;
@@ -92,7 +107,7 @@ bool RCControl_BLE::GyroUpdate() {
     }
 }
 
-void RCControl_BLE::ParseMessage(String msg) {
+void RCControl::ParseMessage(String msg) {
     JoystickUpdated = false;
     GryoUpdated = false;
 
@@ -170,7 +185,7 @@ void RCControl_BLE::ParseMessage(String msg) {
     }
 }
 
-String RCControl_BLE::Dequeue() {
+String RCControl::Dequeue() {
     if (!Empty()) {
         String DataToReturn = _Queue[_frontPointer];
 
@@ -189,7 +204,7 @@ String RCControl_BLE::Dequeue() {
     }
 }
 
-bool RCControl_BLE::Enqueue(String data) {
+bool RCControl::Enqueue(String data) {
     if (!Full()) {
         _Queue[_backPointer] = data;
         _backPointer += 1;
@@ -204,11 +219,11 @@ bool RCControl_BLE::Enqueue(String data) {
     else { return false; }
 }
 
-bool RCControl_BLE::Full() {
+bool RCControl::Full() {
     return _NumOfItems == 16;
 }
 
-bool RCControl_BLE::Empty() {
+bool RCControl::Empty() {
     return _NumOfItems == 0;
 }
 

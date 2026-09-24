@@ -6,18 +6,17 @@
 #include <BLEServer.h>
 #include <BLEUtils.h>
 
-class RCControl_BLE
+class RCControl 
 {
 public:
-	RCControl_BLE(const char* Service_UUID, const char* Chara_UUID, String name);
-	void Begin();
+	RCControl();
+	virtual void Begin();
 
 	float JoyStickX;
 	float JoyStickY;
 	float GyroA;
 	float GyroB;
 	float GyroG;
-
 
 	bool connected;
 	bool JoystickUpdate();
@@ -29,6 +28,21 @@ public:
 	bool Enqueue(String data);
 	bool Full();
 	bool Empty();
+protected:
+	bool JoystickUpdated;
+	bool GryoUpdated;
+private:
+	int _NumOfItems;
+	int _frontPointer;
+	int _backPointer;
+	String _Queue[16];
+};
+
+class RCControl_BLE : public RCControl
+{
+public:
+	RCControl_BLE(const char* Service_UUID, const char* Chara_UUID, String name);
+	void Begin() override;
 private:
 	BLEDevice _dev;
 	BLEServer *_server;
@@ -37,14 +51,6 @@ private:
 	String _name;
 	const char* SERVICE_UUID;
 	const char* CHAR_UUID;
-
-	int _NumOfItems;
-	int _frontPointer;
-	int _backPointer;
-	String _Queue[16];
-
-	bool JoystickUpdated;
-	bool GryoUpdated;
 };
 
 #endif
