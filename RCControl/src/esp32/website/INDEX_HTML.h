@@ -205,16 +205,19 @@ const char INDEX_HTML[] PROGMEM = R"rawliteral(
 
       <br><br>
 
-      <div>Enable gyroscope</div>
-      <label class="switch">
-        <input type="checkbox" onchange="enableOrientationEvent(this)">
-        <span class="slider round"></span>
-      </label>
+      <a class="hidden">
+        <div>Enable gyroscope</div>
+        <label class="switch">
+          <input type="checkbox" onchange="enableOrientationEvent(this)">
+          <span class="slider round"></span>
+        </label>
       
-      <br>
-      <br><a id="gyroA">A</a>
-      <br><a id="gyroB">B</a>
-      <br><a id="gyroG">G</a>
+        <br>
+        <div id="gyroA">A</div>
+        <div id="gyroB">B</div>
+        <div id="gyroG">G</div>
+      </a>
+
 
       <div style="position: absolute; bottom: 75px; left: 50%" id="VersionText"></div>
     </div>
@@ -259,7 +262,7 @@ const char INDEX_HTML[] PROGMEM = R"rawliteral(
 			// Websocket event handlers
 
 			function wsCloseEvent(event) {
-				statusText.innerText = "Disonnected";
+				statusText.innerText = "Disconnected";
 			}
 
 			function wsErrorEvent(event) {
@@ -288,6 +291,7 @@ const char INDEX_HTML[] PROGMEM = R"rawliteral(
 				}
 				else {
 					ws.close();
+          ws = null;
 				}
       };
 
