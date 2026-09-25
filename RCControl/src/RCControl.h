@@ -3,9 +3,9 @@
 
 #if defined(ARDUINO_ARCH_ESP32)
 	#include "esp32/RCControl_ESP32.h"
-	#include "esp32/WebSockets.h"
-	#include "esp32/WebSocketsServer.h"
-	#include "esp32/WebSocketsVersion.h"
+	#include "WebSockets/WebSockets.h"
+	#include "WebSockets/WebSocketsServer.h"
+	#include "WebSockets/WebSocketsVersion.h"
 #elif defined(ARDUINO_ARCH_MBED)
 	#include "mbed/RCControl_MBED.h"
 #else

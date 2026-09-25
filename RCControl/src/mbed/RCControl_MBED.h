@@ -9,6 +9,7 @@ class RCControl_BLE
 public:
 	RCControl_BLE(const char* Service_UUID, const char* Chara_UUID, String name, int ByteLength = 64);
 	void Begin();
+	void loop();
 
 	float JoyStickX;
 	float JoyStickY;

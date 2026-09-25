@@ -3,14 +3,15 @@
 RCControl_BLE RCC("12345678-1234-1234-1234-123456789abc", "abcdef01-1234-1234-1234-123456789abc", "Example");
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
 
   RCC.Begin();
 
-  Serial.println("Waiting for BLE messages");
+  Serial.println("Online");
 }
 
 void loop() {
+  RCC.loop();
   if (RCC.connected) {
     if (RCC.JoystickUpdate()) {
       Serial.println(String(RCC.JoyStickX) + "   " + String(RCC.JoyStickY));

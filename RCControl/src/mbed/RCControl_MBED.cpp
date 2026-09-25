@@ -34,6 +34,10 @@ void RCControl_BLE::Begin() {
     BLE.advertise();
 }
 
+void RCControl_BLE::loop() {
+    BLE.poll();
+}
+
 bool RCControl_BLE::JoystickUpdate() {
     if (JoystickUpdated) {
         JoystickUpdated = false;

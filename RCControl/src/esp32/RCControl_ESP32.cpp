@@ -1,6 +1,12 @@
 #if defined(ARDUINO_ARCH_ESP32)
 
-#include "Arduino.h"
+#include <WebServer.h>
+#include <WiFi.h>
+#include <ESPmDNS.h>
+
+#include "../WebSockets/WebSocketsServer.h"
+
+#include <Arduino.h>
 #include <BLEDevice.h>
 #include <BLEServer.h>
 #include <BLEUtils.h>
@@ -33,11 +39,11 @@ public:
 
 private:
     void onConnect(BLEServer* server) override {
-        Serial.println("Client connected");
+        Serial.println("Connected");
         _RCC->connected = true;
     }
     void onDisconnect(BLEServer* server) override {
-        Serial.println("Client disconnected");
+        Serial.println("Disconnected");
         _RCC->connected = false;
 
         server->startAdvertising();
@@ -49,6 +55,7 @@ private:
 /// </summary>
 RCControl::RCControl() { }
 void RCControl::Begin() { }
+void RCControl::loop() { }
 
 bool RCControl::JoystickUpdate() {
     if (JoystickUpdated) {
@@ -83,8 +90,6 @@ void RCControl::ParseMessage(String msg) {
     }
 
     if (data.startsWith("js,")) {
-        JoystickUpdated = true;
-
         data = data.substring(3);
 
         String splitData[2];
@@ -115,10 +120,9 @@ void RCControl::ParseMessage(String msg) {
         if (abs(JoyStickY) <= 0.05) {
             JoyStickY = 0;
         }
+        JoystickUpdated = true;
     }
     else if (data.startsWith("gyro,")) {
-        GryoUpdated = true;
-
         data = data.substring(5);
 
         String splitData[3];
@@ -142,6 +146,7 @@ void RCControl::ParseMessage(String msg) {
         GyroA = splitData[0].toFloat();
         GyroB = splitData[1].toFloat();
         GyroG = splitData[2].toFloat();
+        GryoUpdated = true;
     }
     else {
         Enqueue(data);
@@ -224,14 +229,85 @@ void RCControl_BLE::Begin() {
 
 }
 
+void RCControl_BLE::loop() { }
 
 
-RCControl_WiFi::RCControl_WiFi() {
+/// <summary>
+/// WiFi
+/// </summary>
+/// <param name="AP_SSID">SSID of the network</param>
+/// <param name="AP_PASS">Password of the network</param>
+RCControl_WiFi::RCControl_WiFi(const char* AP_SSID, const char* AP_PASS) :
+    httpServer(80),
+    webSocket(8080)
+{
+    _AP_SSID = AP_SSID;
+    _AP_PASS = AP_PASS;
+}
 
+RCControl_WiFi* RCControl_WiFi::instance = nullptr;
+
+void RCControl_WiFi::handleRoot()
+{
+    httpServer.send(200, "text/html", INDEX_HTML);
+}
+void RCControl_WiFi::handleJavaScript()
+{
+    httpServer.send(200, "application/javascript", JOYSTICK_JS);
 }
 
 void RCControl_WiFi::Begin() {
+    instance = this;
 
+    WiFi.mode(WIFI_AP);
+    WiFi.softAP(_AP_SSID, _AP_PASS);
+
+    MDNS.begin("esp32");
+
+    httpServer.on("/", [this]() { handleRoot(); });
+    httpServer.on("/joystick.js", [this]() { handleJavaScript(); });
+    httpServer.begin();
+
+    webSocket.begin();
+    webSocket.onEvent(webSocketEventStatic);
+}
+
+void RCControl_WiFi::loop() {
+    httpServer.handleClient();
+    webSocket.loop();
+}
+
+void RCControl_WiFi::webSocketEventStatic(uint8_t clientNum, WStype_t type, uint8_t* payload, size_t length)
+{
+    if (instance != nullptr)
+    {
+        instance->webSocketEvent(
+            clientNum,
+            type,
+            payload,
+            length
+        );
+    }
+}
+
+void RCControl_WiFi::webSocketEvent(uint8_t clientNum, WStype_t type, uint8_t* payload, size_t length)
+{
+    switch (type)
+    {
+    case WStype_DISCONNECTED:
+        Serial.println("Client disconnected");
+        connected = false;
+        break;
+    case WStype_CONNECTED:
+        Serial.println("Client connected");
+        connected = true;
+        break;
+    case WStype_TEXT:
+        ParseMessage(String((char*)payload).substring(0, length));
+        break;
+    default:
+        break;
+    }
 }
 
 #endif
