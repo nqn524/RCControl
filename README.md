@@ -25,7 +25,7 @@ This information is from [caniuse.com](https://caniuse.com/web-bluetooth)
 1. Download and install the [Arduino IDE](https://www.arduino.cc/en/software/)
 2. Skip this step if you plan on using the WiFi medium. Install the `ArduinoBLE` library through the Arduino IDE library manager
     - You will be asked if you want to install `Arduino_SpiNINA` library, select `Install all`
-3. Downlaod and extract the zip file from the Github's [releases](releases) page
+3. Downlaod and extract the zip file from the Github's [releases](https://github.com/nqn524/RCControl/releases/latest) page
 4. Copy the `RCContol` folder into `Documents > Arduino > libraries`. The file structre should look like the following:  
 
 ```
