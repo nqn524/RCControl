@@ -26,7 +26,7 @@ void loop() {
       String msg = RCC.Dequeue();
       Serial.println("Queue: " + msg);
       if (msg == "echo") {
-        RCC.Send("crack");
+        RCC.Send("echo");
       }
     }
   }
