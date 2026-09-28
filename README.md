@@ -3,6 +3,8 @@
 This is a custom made library and wireless controller accessible through a browser, designed to be compatable for every team in the University of York Robot Competition. This library supports Arduino Nano 33 BLE rev2 and the Arduino Nano ESP32. If you stumbled upon this repo and you're not part of the UoY then you're unlikely to find use out of this controller.  
 
 This library supports two forms of communication, Bluetooth Low Energy (BLE) and WiFi (making use of websockets). The Arduino Nano 33 BLE rev2 only has BLE, while the Arduino Nano ESP32 supports both BLE and WiFi. See the relevant sections for instructions on how to use the two different communication mediums.
+
+To make the WiFi communication medium possible, I used a stripped down version of Marcus Sattler's websocket library. The original library can be found [here](https://github.com/Links2004/arduinoWebSockets)
   
 The controller is accessible from this link https://www-users.york.ac.uk/~nqn524
 
@@ -109,10 +111,11 @@ This applies only to the Arduino Nano ESP32.
 If you wish to add more features to the website such as a button that sends a string to the arduino, or a slider to adjust speed, then I encourage you pursue this. You will need a laptop or a computer to do this, so to use it on your phone I recommend hosting the site you create on your personal webspace. See details on how to set it up [here](https://www.york.ac.uk/it-services/tools/personal-web-space/).  
 To make changes you will have to navigate to the website and press `Ctrl+S` this will download the html file of the web app to your device, open the html file in your editor of choice and make your changes.  
 Please be aware that if you do this then any changes that I make to the website will obviously not carry over to your website.  
+
 If you wish to send string messages to the Arduino then you can do so, on the back end of the website there is a function called 'send' (creative name I know) that is able to send any string to the connected BLE device. **Please note that you cannot have a message start with `js,` or `gyro,`, the Arduino checks if a message has either of these prefixes to know if it is a joystick, gyro or a message to the queue**. Here is an example of a button that will simply send the string `Hello` to the Arduino:  
 ```html
 <button class="allbuttons" onclick="send('Hello')">Send Hello</button>
-```
+```  
 
 If you are using the WiFi communication medium with the ESP32, if you wish you can completely avoid the website - the website is effectively just opening up a websocket and sending joystick updates through it. If you want to you can make a program that simply connects to a websocket on the following address `ws://esp32.local:8080` or `ws://192.168.4.1:8080`. If you do this your device will still need to be connected to the network exposed by the ESP32. As an example I opened the nodejs console and ran the following code:
 
@@ -123,6 +126,13 @@ undefined
 undefined
 > ws.close();
 undefine
+```
+
+And this is the output form the ESP32 in the serial monitor
+```
+Client connected
+Queue: test
+Client disconnected
 ```
 
 To be able to read any sent data on the Arduino, the library has a circuilar queue built in and any recieved data that is not the joystick will be placed on this queue. The queue has a max size of 16, after more than 16 strings have been recieved new ones will be discarded. The following block of code can be found in the example and shows how you are able to access this queue.
