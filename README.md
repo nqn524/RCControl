@@ -1,19 +1,19 @@
 # Robot Competition Controller
 
-This is a custom made library and wireless controller accessible through a browser, designed to be compatable for every team in the Univerty of York Robot Competition. This will only work on the Arduino Nano 33 BLE sense Rev2 that every team has been provided. If you stumbled upon this repo and you're not part of the UoY then you're unlikekly to find use out of this controller.  
+This is a custom made library and wireless controller accessible through a browser, designed to be compatable for every team in the University of York Robot Competition. This library supports Arduino Nano 33 BLE rev2 and the Arduino Nano ESP32. If you stumbled upon this repo and you're not part of the UoY then you're unlikely to find use out of this controller.  
   
 The controller is accessible from this link https://www-users.york.ac.uk/~nqn524
 
 # Disclaimer
-The webapp is not compatable with IOS devices due to Apple's higher security concerns, limiting websites from accessing Bluetooth devices.  
-Also note, only a select few browsers have Bluetooth compatibility, see the table below to find out which can and cannot.  
+To be able to use this on IOS (untested on Macbook) you will have to use the ESP32 WiFi implementation.  
+If you are planning on using the Bluetooth approach then be aware that only a few browsers have BLE compatability.  
 
 | Chrome | Edge | Firefox | Safari | Opera | Opera<br>mini | Internet<br>explorer | Samsung<br>internet | Brave |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | <img src="https://www-users.york.ac.uk/~nqn524/BrowserIcons/chrome.png" width="40"/> | <img src="https://www-users.york.ac.uk/~nqn524/BrowserIcons/edge.png" width="40"/> | <img src="https://www-users.york.ac.uk/~nqn524/BrowserIcons/firefox.png" width="40"/> | <img src="https://www-users.york.ac.uk/~nqn524/BrowserIcons/safari.png" width="40"/> | <img src="https://www-users.york.ac.uk/~nqn524/BrowserIcons/opera.png" width="40"/> | <img src="https://www-users.york.ac.uk/~nqn524/BrowserIcons/opera_mini.png" width="40"/> | <img src="https://www-users.york.ac.uk/~nqn524/BrowserIcons/ie.png" width="40"/> | <img src="https://www-users.york.ac.uk/~nqn524/BrowserIcons/samsung_internet.png" width="40"/> | <img src="https://www-users.york.ac.uk/~nqn524/BrowserIcons/brave.png" width="40"/> |
 | &#x2705; | &#x2705; | &#x274C; | &#x274C; | &#x2705; | &#x274C; | &#x274C; | &#x2705; | &#x274C; |
 
-**Note: This information is accurate as of 19/05/2026**  
+**Note: This information is accurate as of 28/09/2026**  
 This information is from [caniuse.com](https://caniuse.com/web-bluetooth)
 
 # How to install the library
@@ -38,8 +38,8 @@ This information is from [caniuse.com](https://caniuse.com/web-bluetooth)
 
 5. You will now want to restart the Arduino IDE to allow it to recognise the RCContol library
 6. Everything should now be setup. 
- - There is an example that you can access through the Arduino IDE, open it by going:  
-`File > Examples > RobotCompControl > ExampleMotorControl`  
+ - There are a few examples that you can access through the Arduino IDE, open them by going:  
+`File > Examples > RobotCompControl > mbed`
 Assuming everything is installed correctly this should work immedietly when you upload to your Arduino
  - Alternatively you can access it from the Github [here](RCControl/examples/ExampleMotorControl/ExampleMotorControl.ino)
 7. On line 7 in the example you will see the following code:  
