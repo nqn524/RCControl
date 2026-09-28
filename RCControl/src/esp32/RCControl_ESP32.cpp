@@ -277,6 +277,10 @@ void RCControl_WiFi::loop() {
     webSocket.loop();
 }
 
+void RCControl_WiFi::Send(String msg) {
+    webSocket.broadcastTXT(msg);
+}
+
 void RCControl_WiFi::webSocketEventStatic(uint8_t clientNum, WStype_t type, uint8_t* payload, size_t length)
 {
     if (instance != nullptr)

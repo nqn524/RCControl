@@ -74,6 +74,7 @@ public:
 	RCControl_WiFi(const char* AP_SSID, const char* AP_PASS);
 	void Begin() override;
 	void loop() override;
+	void Send(String msg);
 private:
 	static RCControl_WiFi* instance;
 
