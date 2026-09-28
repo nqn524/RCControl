@@ -116,6 +116,15 @@ If you wish to send string messages to the Arduino then you can do so, on the ba
 
 If you are using the WiFi communication medium with the ESP32, if you wish you can completely avoid the website - the website is effectively just opening up a websocket and sending joystick updates through it. If you want to you can make a program that simply connects to a websocket on the following address `ws://esp32.local:8080` or `ws://192.168.4.1:8080`. If you do this your device will still need to be connected to the network exposed by the ESP32. As an example I opened the nodejs console and ran the following code:
 
+```javascript
+> let ws = new WebSocket("ws://esp32.local:8080");
+undefined
+> ws.send("test");
+undefined
+> ws.close();
+undefine
+```
+
 To be able to read any sent data on the Arduino, the library has a circuilar queue built in and any recieved data that is not the joystick will be placed on this queue. The queue has a max size of 16, after more than 16 strings have been recieved new ones will be discarded. The following block of code can be found in the example and shows how you are able to access this queue.
 ```cpp
 if (!RCC.Empty()) {
