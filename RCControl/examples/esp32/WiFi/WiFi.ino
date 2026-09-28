@@ -23,7 +23,11 @@ void loop() {
     }
 
     if (!RCC.Empty()) {
-      Serial.println("Queue: " + RCC.Dequeue());
+      String msg = RCC.Dequeue();
+      Serial.println("Queue: " + msg);
+      if (msg == "echo") {
+        RCC.send("echo");
+      }
     }
   }
 }
