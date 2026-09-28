@@ -97,6 +97,10 @@ This applies to both the Arduino Nano 33 BLE rev2 and the Arduino Nano ESP32.
 4. Then press `Connect` A small window will appear, when your Arduino shows up in the list select it and connect to it.
 5. After a moment the website should show the connection successful, move the joystick around and you should see the x and y value on your serial monitor.
 
+### Gyroscope input
+
+Unique to the BLE communication medium, there is functionality to use your devices gyroscope. To enable this go to settings and toggle the switch to enable the gyro, it will take your current rotation as a reference then tell you the change from that reference point. You can change this reference to any point you like by simply pressing the `Zero gyro` button.
+
 ## WiFi communication medium
 
 This applies only to the Arduino Nano ESP32.
