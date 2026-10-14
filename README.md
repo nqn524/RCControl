@@ -1,11 +1,11 @@
-[Arduino instructions](ARDUINO.md)
-[Raspberry instructions](RASPBERRY_PI.md)
+[Arduino instructions](ARDUINO.md)  
+[Raspberry Pi instructions](RASPBERRY_PI.md)
 
 # Robot Competition Controller
 
-This is a custom made library and wireless controller accessible through a browser, designed to be compatable for every team in the University of York Robot Competition. This library supports Arduino Nano 33 BLE rev2 and the Arduino Nano ESP32. If you stumbled upon this repo and you're not part of the UoY then you're unlikely to find use out of this controller.  
+This is a custom made library and wireless controller accessible through a browser, designed to be compatable for every team in the University of York Robot Competition. This library supports Arduino Nano 33 BLE rev2, the Arduino Nano ESP32 and the Raspberry Pi Pico 2 W. If you stumbled upon this repo and you're not part of the UoY then you're unlikely to find use out of this controller.  
 
-This library supports two forms of communication, Bluetooth Low Energy (BLE) and WiFi (making use of websockets). The Arduino Nano 33 BLE rev2 only has BLE, while the Arduino Nano ESP32 supports both BLE and WiFi. See the relevant sections for instructions on how to use the two different communication mediums.
+This library supports two forms of communication, Bluetooth Low Energy (BLE) and WiFi (making use of websockets). The Arduino Nano 33 BLE rev2 only has BLE, while the Arduino Nano ESP32 and the Raspberry Pi Pico 2 W supports both BLE and WiFi. See the relevant sections for instructions on how to use the two different communication mediums.
 
 To make the WiFi communication medium possible, I used a stripped down version of Marcus Sattler's websocket library. The original library can be found [here](https://github.com/Links2004/arduinoWebSockets)
   
@@ -23,28 +23,7 @@ If you are planning on using the Bluetooth approach then be aware that only a fe
 **Note: This information is accurate as of 28/09/2026**  
 This information is from [caniuse.com](https://caniuse.com/web-bluetooth)
 
-# How to install the library
 
-1. Download and install the [Arduino IDE](https://www.arduino.cc/en/software/)
-2. Skip this step if you plan on using the WiFi medium. Install the `ArduinoBLE` library through the Arduino IDE library manager
-    - You will be asked if you want to install `Arduino_SpiNINA` library, select `Install all`
-3. Downlaod and extract the zip file from the Github's [releases](https://github.com/nqn524/RCControl/releases/latest) page
-4. Copy the `RCContol` folder into `Documents > Arduino > libraries`. The file structre should look like the following:  
-
-```
-└── Arduino/  
-  └── libraries/  
-    ├── Arduino_SpiNINA/
-    ├── ArduinoBLE/  
-    └── RCControl/  
-      ├── examples/  
-      ├── src/  
-      ├── Keywords.txt  
-      └── library.properties
-```
-- If you skipped step 2 then you won't have either `Arduino_SpiNINA` or `ArduinoBLE` in you folder, this is fine.
-5. You will now want to restart the Arduino IDE to allow it to recognise the RCContol library
-6. Everything should now be setup.
 
 # Hardware specific instructions
 
