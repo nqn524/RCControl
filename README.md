@@ -1,3 +1,6 @@
+[Arduino instructions](ARDUINO.md)
+[Raspberry instructions](RASPBERRY_PI.md)
+
 # Robot Competition Controller
 
 This is a custom made library and wireless controller accessible through a browser, designed to be compatable for every team in the University of York Robot Competition. This library supports Arduino Nano 33 BLE rev2 and the Arduino Nano ESP32. If you stumbled upon this repo and you're not part of the UoY then you're unlikely to find use out of this controller.  
