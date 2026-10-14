@@ -23,55 +23,13 @@ If you are planning on using the Bluetooth approach then be aware that only a fe
 **Note: This information is accurate as of 28/09/2026**  
 This information is from [caniuse.com](https://caniuse.com/web-bluetooth)
 
-
-
-# Hardware specific instructions
-
-Once you have set up the library with your IDE then proceed with the following instructions based on your selected hardware.
-
-## Arduino Nano 33 BLE rev2
- 1. There is an example that you can access through the Arduino IDE, open it by going:  
-`File > Examples > RCControl > mbed`  
-Assuming everything is installed correctly this should work immedietly when you upload to your Arduino
- - Alternatively you can access it from the Github [here](RCControl/examples/mbed/mbed.ino)
-2. On line 3 in the example you will see the following code:  
-`RCControl_BLE RCC("12345678-1234-1234-1234-123456789abc", "abcdef01-1234-1234-1234-123456789abc", "Example", 64);`  
-You will need to change a few of the arguments:  
- - `12345678-1234-1234-1234-123456789abc` represents the Service UUID, using this [UUID generator](https://www.uuidgenerator.net) generate and replace the template UUID (Keep hold of this UUID, you will need it on the website when you come to connecting to the Arduino)
- - `abcdef01-1234-1234-1234-123456789abc` represents the Characteristic UUID, using this [UUID generator](https://www.uuidgenerator.net) generate and replace the template UUID (Keep hold of this UUID, you will need it on the website when you come to connecting to the Arduino)  
- **NOTE: The Service UUID and Characteristic UUID MUST be different**
- - `Example` represents the name of the Arduino when broadcasting, change this to something like your team name or something similar to seperate it from other teams robots
- - `64` repesents the maximum byte length of received data, if you start sending large strings of data they will get cut off after 64 characters, you can increase this value up to 512 if you need to
-
-### Disclaimer when using the IMU
-
-The Arduino Nano 33 BLE rev2 has an on board IMU that allows you to get the boards linear acceleration, angular acceleration and magnetic field strength in all three axis. If you plan on using it then make sure to use the library called `Arduino_BMI270_BMM150` and **NOT** `Arduino_LSM9DS1`. A lot of online documentation (including official Arduino documentation) says to use the wrong library. Thankfully the syntax between the two libraries is identical, the only difference between them is the model of IMU they are compatible with. The IMU on the Arduino Nano 33 BLE sense Rev2 is made up of the 3-axis accelerometer and gyroscope `BMI270`, and the 3-axis magnetometer `BMM150`.
-
-## Arduino Nano ESP32
-
-1. There are a couple examples that you can access through the Arduino IDE, you can open them by going:  
-`File > Examples > RCControl > esp32 > BLE or WiFi`  
-Assuming everything is installed correctly this should work immedietly when you upload to you Arduino.
- - Alternatively you can find the examples from the GitHub. [BLE](RCControl/examples/esp32/BLE/BLE.ino) or [WiFi](RCControl/examples/esp32/WiFi/WiFi.ino)
-2. You will need to change line 3 in the example on both of the examples.
- - For the BLE example, you will see this line:  
-   `RCControl_BLE RCC("12345678-1234-1234-1234-123456789abc", "abcdef01-1234-1234-1234-123456789abc", "Example");`
-    - `12345678-1234-1234-1234-123456789abc` represents the Service UUID, using this [UUID generator](https://www.uuidgenerator.net) generate and replace the template UUID (Keep hold of this UUID, you will need it on the website when you come to connecting to the Arduino)
-    - `abcdef01-1234-1234-1234-123456789abc` represents the Characteristic UUID, using this [UUID generator](https://www.uuidgenerator.net) generate and replace the template UUID (Keep hold of this UUID, you will need it on the website when you come to connecting to the Arduino)  
- **NOTE: The Service UUID and Characteristic UUID MUST be different**
-    - `Example` represents the name of the Arduino when broadcasting, change this to something like your team name or something similar to seperate it from other teams robots
- - For the WiFi example, you will see this line:  
-   `RCControl_WiFi RCC("Example", "password");`
-    - `Example` represents the SSID of the network that the ESP32 will expose, change this to something like your team name or something similar to seperate it from other teams robots.
-    - `password` represents the password of the network that the ESP32 will expose, change this to something and share it amongst your team to prevent other teams from connecting to your robot and sabotaging you.
-
 # How to use website
 
-Having the website connect to the Arduino is slightly different depending on which communication medium you are using
+Having the website connect to the Arduino / Pico is slightly different depending on which communication medium you are using
 
 ## BLE communication medium
 
-This applies to both the Arduino Nano 33 BLE rev2 and the Arduino Nano ESP32.
+This applies to both the Arduino Nano 33 BLE rev2, the Arduino Nano ESP32, and the Raspberry Pi Pico 2 W.
 
 1. Connect your Arduino to power
 2. Ensure Bluetooth is enabled on your device
@@ -85,7 +43,7 @@ Unique to the BLE communication medium, there is functionality to use your devic
 
 ## WiFi communication medium
 
-This applies only to the Arduino Nano ESP32.
+This applies only to the Arduino Nano ESP32 and the Raspberry Pi Pico 2 W.
 
 1. Connect you Arduino to power
 2. Open the WiFi settings on your phone or laptop and connect to the network with the SSID of your robot (the password is the one you specified at the top of the code). Your device might warn you and say that there is no internet connection, this is not an issue.
@@ -103,7 +61,7 @@ If you wish to send string messages to the Arduino then you can do so, on the ba
 <button class="allbuttons" onclick="send('Hello')">Send Hello</button>
 ```  
 
-If you are using the WiFi communication medium with the ESP32, if you wish you can completely avoid the website - the website is effectively just opening up a websocket and sending joystick updates through it. If you want to you can make a program that simply connects to a websocket on the following address `ws://esp32.local:8080` or `ws://192.168.4.1:8080`. If you do this your device will still need to be connected to the network exposed by the ESP32. As an example I opened the nodejs console and ran the following code:
+If you are using the WiFi communication medium, you will have to open the library's source files, for the Arduino Nano ESP32 open `RCControl > src > esp32 > website > INDEX_HTML.h` and for the Raspberry Pi Pico 2 W open `lib > RCControl > website > index.html`, make any changes you wish and save. Alternatively you can completely avoid the website - the website is effectively just opening up a websocket and sending joystick updates through it. If you want to you can make a program that simply connects to a websocket, for the Arduino Nano ESP32 you can use either address `ws://esp32.local:8080` or `ws://192.168.4.1:8080`, for the Raspberry Pi Pico 2 W you must use the address `ws://192.168.4.1/ws`. If you do this your device will still need to be connected to the network exposed by the ESP32 / Pico. As an example I opened the nodejs console and ran the following code:
 
 ```javascript
 > let ws = new WebSocket("ws://esp32.local:8080");
