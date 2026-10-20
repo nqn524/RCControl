@@ -31,7 +31,7 @@ Having the website connect to the Arduino / Pico is slightly different depending
 
 This applies to both the Arduino Nano 33 BLE rev2, the Arduino Nano ESP32, and the Raspberry Pi Pico 2 W.
 
-1. Connect your Arduino to power
+1. Connect your microcontroller to power
 2. Ensure Bluetooth is enabled on your device
 3. On the website, press the `Settings` icon and configure the UUIDs to match the UUIDs on the Arduino
 4. Then press `Connect` A small window will appear, when your Arduino shows up in the list select it and connect to it.
@@ -45,15 +45,17 @@ Unique to the BLE communication medium, there is functionality to use your devic
 
 This applies only to the Arduino Nano ESP32 and the Raspberry Pi Pico 2 W.
 
-1. Connect you Arduino to power
+1. Connect you microcontroller to power
 2. Open the WiFi settings on your phone or laptop and connect to the network with the SSID of your robot (the password is the one you specified at the top of the code). Your device might warn you and say that there is no internet connection, this is not an issue.
-3. Once connected, open your browser and type `esp32.local` into the URL bar (this might take a moment to load).
+3. Once connected, open your browser and type `192.168.4.1` into the URL bar (this might take a moment to load).
 4. On the website, press the `Settings` icon then press the `Connect` button. Once successful you can move the joystick and you should see the x and y value on your serial monitor
 
 # Tailoring the website to your needs.
 
-If you wish to add more features to the website such as a button that sends a string to the arduino, or a slider to adjust speed, then I encourage you pursue this. You will need a laptop or a computer to do this, so to use it on your phone I recommend hosting the site you create on your personal webspace. See details on how to set it up [here](https://www.york.ac.uk/it-services/tools/personal-web-space/).  
-To make changes you will have to navigate to the website and press `Ctrl+S` this will download the html file of the web app to your device, open the html file in your editor of choice and make your changes.  
+If you wish to add more features to the website such as a button that sends a string to the arduino, or a slider to adjust speed, then I encourage you pursue this.  
+  
+For the BLE implementation, you will need to host the website yourself, I recommend hosting the site you create through the university on your personal webspace. See details on how to set it up [here](https://www.york.ac.uk/it-services/tools/personal-web-space/).  
+To make changes, head to this [link](https://www-users.york.ac.uk/~nqn524/download) and download and extract the zip file, open the html file in your editor of choice and make your changes.  
 Please be aware that if you do this then any changes that I make to the website will obviously not carry over to your website.  
 
 If you wish to send string messages to the Arduino then you can do so, on the back end of the website there is a function called 'send' (creative name I know) that is able to send any string to the connected BLE device. **Please note that you cannot have a message start with `js,` or `gyro,`, the Arduino checks if a message has either of these prefixes to know if it is a joystick, gyro or a message to the queue**. Here is an example of a button that will simply send the string `Hello` to the Arduino:  
