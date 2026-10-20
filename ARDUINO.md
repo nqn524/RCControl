@@ -33,7 +33,7 @@ Once you have set up the library with your IDE then proceed with the following i
  1. There is an example that you can access through the Arduino IDE, open it by going:  
 `File > Examples > RCControl > mbed`  
 Assuming everything is installed correctly this should work immedietly when you upload to your Arduino
- - Alternatively you can access it from the Github [here](RCControl/examples/mbed/mbed.ino)
+ - Alternatively you can access it from the Github [here](Arduino/RCControl/examples/mbed/mbed.ino)
 2. On line 3 in the example you will see the following code:  
 `RCControl_BLE RCC("12345678-1234-1234-1234-123456789abc", "abcdef01-1234-1234-1234-123456789abc", "Example", 64);`  
 You will need to change a few of the arguments:  
